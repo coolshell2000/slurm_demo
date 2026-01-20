@@ -407,3 +407,18 @@ Contributions are welcomed from the community! If you want to add features, fix 
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## 📸 Project Images
+
+Below are the images included in this project:
+
+<p align="center">
+  <img src="./2026-01-18_22-31.png" alt="Architecture Diagram 1" width="45%" />
+  <img src="./2026-01-18_22-38.png" alt="Architecture Diagram 2" width="45%" />
+</p>
+
+<p align="center">
+  <img src="./dashboard_en_hourly.png" alt="English Hourly Dashboard" width="30%" />
+  <img src="./dashboard_de_minutely.png" alt="German Minutely Dashboard" width="30%" />
+  <img src="./dashboard_zh_daily.png" alt="Chinese Daily Dashboard" width="30%" />
+</p>
