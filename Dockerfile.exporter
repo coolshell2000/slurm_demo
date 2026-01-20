@@ -1,0 +1,17 @@
+FROM slurm-docker-cluster:25.05.3
+
+# Install Go to build/run the exporter if needed, or just use the binaries
+# However, we can just download the binary if we find the link, 
+# or use a pre-built one if we can find a reliable source.
+# For now, let's install the exporter from source to be safe.
+
+USER root
+RUN yum install -y golang git
+
+# Install the prometheus-slurm-exporter
+RUN go install github.com/vpenso/prometheus-slurm-exporter@latest
+
+# The binary will be in /root/go/bin/prometheus-slurm-exporter
+# Use the standard entrypoint to ensure environment and munge are ready
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["/root/go/bin/prometheus-slurm-exporter", "-listen-address", ":8080"]

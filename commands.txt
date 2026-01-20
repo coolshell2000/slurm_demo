@@ -1,0 +1,34 @@
+# Slurm Docker Cluster - Common Commands Reference
+
+## Cluster Management
+bash slurm_startup.sh                  # Start/Restart the entire cluster and fix permissions
+bash slurm_stop.sh                     # Stop and clean up the cluster
+docker-compose ps                      # Check container statuses
+
+## Information & Status
+docker exec slurmctld sinfo            # View partition and node summary
+docker exec slurmctld squeue           # View active and pending jobs
+docker exec slurmctld scontrol show nodes  # View detailed node status (CPU, Mem, State)
+docker exec slurmctld scontrol show partitions # View partition details
+docker exec slurmctld sdiag            # View scheduler statistics and performance
+
+## Job Execution (User Perspective)
+docker exec slurmctld srun -n 3 hostname               # Run a job on 3 nodes
+docker exec -u u1 slurmctld srun -n 2 echo "Hello"     # Run as a specific user (u1)
+docker exec -u u1 slurmctld sbatch script.sh           # Submit a batch script
+docker exec -u u1 slurmctld sacct                      # View job history
+
+## Administration Tasks
+docker exec slurmctld scontrol reconfigure             # Reload slurm.conf changes
+docker exec slurmctld scontrol update nodename=c1 state=RESUME  # Bring a node back online
+docker exec slurmctld scontrol update nodename=c1 state=DRAIN reason="Maintenance" # Drain a node
+
+## Monitoring & Logs
+docker logs slurmctld                  # View Controller logs
+docker logs slurmdbd                   # View Database logs
+docker logs c1                         # View Node c1 (slurmd) logs
+# Grafana UI: http://localhost:3000 (admin/admin)
+
+## Authentication (Munge)
+docker exec slurmctld munge -n | docker exec c1 unmunge   # Test cross-node auth
+docker exec c1 pkill munged && docker exec c1 /usr/sbin/munged  # Manually restart Munge
